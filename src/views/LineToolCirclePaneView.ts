@@ -24,7 +24,7 @@ import {
 	OffScreenState,
 	HitTestResult,
 	TextRendererData,
-} from 'lightweight-charts-line-tools-core';
+} from '../../core';
 import { LineToolCircle } from '../model/LineToolCircle';
 
 
