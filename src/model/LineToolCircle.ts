@@ -37,7 +37,7 @@ import {
 	HitTestType,
 	ConstraintResult,
 	SnapAxis,
-} from '../../core';
+} from 'lightweight-charts-line-tools-core';
 import { LineToolCirclePaneView } from '../views/LineToolCirclePaneView';
 
 
