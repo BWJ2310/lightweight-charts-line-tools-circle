@@ -102,20 +102,20 @@ export class LineToolCirclePaneView<HorzScaleItem> extends LineToolPaneView<Horz
 		// --- CULLING IMPLEMENTATION START (CORRECTED) ---
 
 		/**
-         * CULLING IMPLEMENTATION
-         *
-         * A simple logical AABB check is unreliable for a circle because a logical unit
-         * does not equal a pixel unit.
-         *
-         * **Logic:**
-         * 1. Get the logical Center (P0) and Radius (P0-P1).
-         * 2. Synthesize the bounding box (Top-Left/Bottom-Right) in **screen pixels** (where units are consistent).
-         * 3. Convert those 2 screen corner points back to **logical** time/price points.
-         * 4. Run `getToolCullingState` on those 2 final logical corner points. This correctly culls
-         *    the tool based on its current *screen-space* bounding box.
-         */
+		 * CULLING IMPLEMENTATION
+		 *
+		 * A simple logical AABB check is unreliable for a circle because a logical unit
+		 * does not equal a pixel unit.
+		 *
+		 * **Logic:**
+		 * 1. Get the logical Center (P0) and Radius (P0-P1).
+		 * 2. Synthesize the bounding box (Top-Left/Bottom-Right) in **screen pixels** (where units are consistent).
+		 * 3. Convert those 2 screen corner points back to **logical** time/price points.
+		 * 4. Run `getToolCullingState` on those 2 final logical corner points. This correctly culls
+		 *    the tool based on its current *screen-space* bounding box.
+		 */
 		if (this._tool.getPermanentPointsCount() >= this._tool.pointsCount && !this._tool.isCreating() && !this._tool.isEditing()) {
-			
+
 			const P0_logical = this._tool.getPoint(0); // Center Logical Point
 			const P1_logical = this._tool.getPoint(1); // Radius Logical Point
 
@@ -123,7 +123,7 @@ export class LineToolCirclePaneView<HorzScaleItem> extends LineToolPaneView<Horz
 			const P1_screen = this._points[1]; // Radius Screen Point
 
 			if (P0_logical && P1_logical && P0_screen && P1_screen) {
-				
+
 				// 1. Calculate the VISUAL screen radius (the actual rendered distance)
 				const screenRadius = P0_screen.subtract(P1_screen).length();
 
@@ -133,7 +133,7 @@ export class LineToolCirclePaneView<HorzScaleItem> extends LineToolPaneView<Horz
 					// Point 1: Top-Left (Min X, Min Y)
 					new Point(
 						(P0_screen.x - screenRadius) as Coordinate,
-						(P0_screen.y - screenRadius) as Coordinate 
+						(P0_screen.y - screenRadius) as Coordinate
 					),
 					// Point 2: Bottom-Right (Max X, Max Y)
 					new Point(
@@ -173,39 +173,39 @@ export class LineToolCirclePaneView<HorzScaleItem> extends LineToolPaneView<Horz
 		const centerPointScreen = this._points[0];
 		const radiusPointScreen = this._points[1];
 
-        // --- TEXT BOUNDING BOX CALCULATION START ---
-        
-        // 1. Calculate the screen radius (distance between center and radius point)
-        const screenRadius = centerPointScreen.subtract(radiusPointScreen).length();
-        
-        // 2. Synthesize the bounding box corners (Top-Left and Bottom-Right)
-        // Bounding Box X range: [Center.x - Radius, Center.x + Radius]
-        // Bounding Box Y range: [Center.y - Radius, Center.y + Radius]
-        
+		// --- TEXT BOUNDING BOX CALCULATION START ---
+
+		// 1. Calculate the screen radius (distance between center and radius point)
+		const screenRadius = centerPointScreen.subtract(radiusPointScreen).length();
+
+		// 2. Synthesize the bounding box corners (Top-Left and Bottom-Right)
+		// Bounding Box X range: [Center.x - Radius, Center.x + Radius]
+		// Bounding Box Y range: [Center.y - Radius, Center.y + Radius]
+
 		/**
-         * TEXT BOUNDING BOX CALCULATION
-         *
-         * The text box must be aligned to the **square bounding box** of the circle.
-         * We calculate the coordinates for the Top-Left and Bottom-Right corners of this square
-         * in screen space. These two synthetic points are passed to the `TextRenderer`.
-         */
-        const textBoundingPoints: Point[] = [
-            // Top-Left Corner (Min X, Min Y)
-            new Point(
-                (centerPointScreen.x - screenRadius) as Coordinate,
-                (centerPointScreen.y - screenRadius) as Coordinate 
-            ),
-            // Bottom-Right Corner (Max X, Max Y)
-            new Point(
-                (centerPointScreen.x + screenRadius) as Coordinate,
-                (centerPointScreen.y + screenRadius) as Coordinate
-            )
-        ];
-        
-        // --- TEXT BOUNDING BOX CALCULATION END ---		
+		 * TEXT BOUNDING BOX CALCULATION
+		 *
+		 * The text box must be aligned to the **square bounding box** of the circle.
+		 * We calculate the coordinates for the Top-Left and Bottom-Right corners of this square
+		 * in screen space. These two synthetic points are passed to the `TextRenderer`.
+		 */
+		const textBoundingPoints: Point[] = [
+			// Top-Left Corner (Min X, Min Y)
+			new Point(
+				(centerPointScreen.x - screenRadius) as Coordinate,
+				(centerPointScreen.y - screenRadius) as Coordinate
+			),
+			// Bottom-Right Corner (Max X, Max Y)
+			new Point(
+				(centerPointScreen.x + screenRadius) as Coordinate,
+				(centerPointScreen.y + screenRadius) as Coordinate
+			)
+		];
+
+		// --- TEXT BOUNDING BOX CALCULATION END ---		
 
 		// --- 1. Prepare and add the Circle Renderer (Main Body) ---
-		
+
 		/**
 		 * CIRCLE RENDERER DATA SETUP
 		 *
@@ -220,7 +220,7 @@ export class LineToolCirclePaneView<HorzScaleItem> extends LineToolPaneView<Horz
 			toolDefaultHoverCursor: options.defaultHoverCursor,
 			toolDefaultDragCursor: options.defaultDragCursor,
 		};
- 
+
 		this._circleRenderer.setData(circleRendererData);
 		this._renderer.append(this._circleRenderer);
 
@@ -248,7 +248,7 @@ export class LineToolCirclePaneView<HorzScaleItem> extends LineToolPaneView<Horz
 
 		// --- 3. Prepare and add the Anchor Points (Handles) ---
 		//if (this.areAnchorsVisible()) {
-			this._addAnchors(this._renderer);
+		this._addAnchors(this._renderer);
 		//}
 	}
 
@@ -275,23 +275,23 @@ export class LineToolCirclePaneView<HorzScaleItem> extends LineToolPaneView<Horz
 			const logicalAnchor = this._tool.getPoint(i) as LineToolPoint;
 
 			// Add null check
-			if (!logicalAnchor) { 
-				continue; 
+			if (!logicalAnchor) {
+				continue;
 			}
 
 			const screenPoint = this._tool.pointToScreenPoint(logicalAnchor);
 
 			if (screenPoint) {
 				const isPrimaryAnchor = i === 0 || i === 1;
-				
+
 				// We create an AnchorPoint for each functional index (0-7)
 				const anchor = new AnchorPoint(
-					screenPoint.x, 
-					screenPoint.y, 
-					i, 
+					screenPoint.x,
+					screenPoint.y,
+					i,
 					!isPrimaryAnchor // Virtual points can be squares/different shapes
 				);
-				
+
 				// *** CRITICAL STEP: Only pass data for the 2 visually desired anchors ***
 				if (i === 0 || i === 1) {
 					functionalAnchors.push(anchor);
@@ -300,13 +300,13 @@ export class LineToolCirclePaneView<HorzScaleItem> extends LineToolPaneView<Horz
 		}
 
 		const options = this._tool.options();
-		
+
 		const anchorData = {
 			points: functionalAnchors, // This array only contains anchors 0 and 1 now
 			defaultAnchorHoverCursor: options.defaultAnchorHoverCursor,
 			defaultAnchorDragCursor: options.defaultAnchorDragCursor,
 		};
-		
+
 		// Append the anchor renderer to the composite renderer
 		renderer.append(this.createLineAnchor(anchorData, 0));
 	}

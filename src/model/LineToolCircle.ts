@@ -121,7 +121,7 @@ export class LineToolCircle<HorzScaleItem> extends BaseLineTool<HorzScaleItem> {
 	 * @override
 	 */
 	public override readonly pointsCount: number = 2; // Center (P0) and Radius Point (P1)
-	
+
 	/**
 	 * Explicitly defines the highest valid index for an interactive anchor point.
 	 *
@@ -310,7 +310,7 @@ export class LineToolCircle<HorzScaleItem> extends BaseLineTool<HorzScaleItem> {
 	 */
 	public override _internalHitTest(x: Coordinate, y: Coordinate): HitTestResult<LineToolHitTestData> | null {
 
-		if (!this._paneViews || this._paneViews.length === 0) { 
+		if (!this._paneViews || this._paneViews.length === 0) {
 			return null; // Tool is being destroyed, safely exit hit-test
 		}
 
@@ -469,8 +469,8 @@ export class LineToolCircle<HorzScaleItem> extends BaseLineTool<HorzScaleItem> {
 	 * @override
 	 */
 	public override getShiftConstrainedPoint(
-		pointIndex: number, 
-		rawScreenPoint: Point, 
+		pointIndex: number,
+		rawScreenPoint: Point,
 		phase: InteractionPhase,
 		originalLogicalPoint: LineToolPoint,
 		allOriginalLogicalPoints: LineToolPoint[]
@@ -478,7 +478,7 @@ export class LineToolCircle<HorzScaleItem> extends BaseLineTool<HorzScaleItem> {
 
 		// --- 1. Only apply constraint to the Radius Point (P1) ---
 		// Anchor 0 moves the whole tool (Move phase in editing) and should not be constrained by Shift.
-		if (pointIndex !== 1) { 
+		if (pointIndex !== 1) {
 			// Fallback: For all other anchors (P0 or virtual), use the raw point (no constraint)
 			return { point: rawScreenPoint, snapAxis: 'none' };
 		}
